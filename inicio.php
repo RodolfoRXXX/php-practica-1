@@ -4,25 +4,25 @@
 	require 'admin/conexion.php';
 
 	/* Obtener Productos Destacados */
-	$query = $conexion->query("SELECT P.idProducto, P.Nombre, P.Precio, P.Imagen, M.Nombre AS Marca FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca WHERE P.Destacado = 1 LIMIT 0, 6");
+	$query = $conexion->query("SELECT P.idProducto, P.Nombre, P.Precio, P.Imagen, P.Stock, M.Nombre AS Marca FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca WHERE P.Destacado = 1 LIMIT 0, 6");
 	
 	$productosDestacados = array();
 
 	foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $registro) {
 		
-		$producto = new Producto($registro["idProducto"], $registro["Nombre"], $registro["Precio"], $registro["Marca"], $registro["Imagen"]);
+		$producto = new Producto($registro["idProducto"], $registro["Nombre"], $registro["Precio"], $registro["Marca"], null, null, $registro["Stock"], $registro['Imagen']);
 
 		array_push($productosDestacados, $producto);
 	}
 
 	/* Obtener Ultimos Productos */
-	$query = $conexion->query("SELECT P.idProducto, P.Nombre, P.Precio, P.Imagen, M.Nombre AS Marca FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca WHERE P.Destacado = 0 LIMIT 0, 6");
+	$query = $conexion->query("SELECT P.idProducto, P.Nombre, P.Precio, P.Imagen, P.Stock, M.Nombre AS Marca FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca WHERE P.Destacado = 0 ORDER BY P.Stock DESC LIMIT 0, 6");
 	
 	$ultimosProductos = array();
 
 	foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $registro) {
 		
-		$producto = new Producto($registro["idProducto"], $registro["Nombre"], $registro["Precio"], $registro["Marca"], $registro["Imagen"]);
+		$producto = new Producto($registro["idProducto"], $registro["Nombre"], $registro["Precio"], $registro["Marca"], null, null, $registro["Stock"], $registro['Imagen']);
 
 		array_push($ultimosProductos, $producto);
 	}
