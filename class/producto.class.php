@@ -1,6 +1,8 @@
 <?php
+	require 'class/conexion.class.php';
+
 	class Producto {
-		
+
 		private $idProducto   = null;
 		private $Nombre 	  = null;
 		private $Precio 	  = null;
@@ -11,7 +13,7 @@
 		private $Imagen 	  = null;
 
 
-		function __construct($id, $n, $p, $m, $c, $d, $s, $i){
+		function __construct($id = null, $n = null, $p = null, $m = null, $c = null, $d = null, $s = null, $i = null){
 			$this->idProducto 	= $id;
 			$this->Nombre 		= $n;
 			$this->Precio 		= $p;
@@ -76,6 +78,27 @@
 				<div class="clearfix"></div>
 			</div>
 		<?php	
+		}
+
+		//Método estático para obtener productos
+		static function obtenerProductos( $cantidad = 6, $destacado = -1 ){
+			$parametros = array(
+									'engineDb'=>'mysql',
+									'server'  =>'localhost',
+									'nameDb'  =>'comercioit',
+									'user'    =>'root',
+									'password'=>''
+								);
+			$conexion = new Conexion( $parametros );
+
+			$sql = 'SELECT P.idProducto, P.Nombre, P.Precio, M.Nombre AS Marca, C.Nombre AS Categoria, P.Presentacion, P.Stock, P.Imagen FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca INNER JOIN categorias AS C ON C.idCategoria = P.Categoria';
+			if($destacado != -1){
+				$sql .= " Where P.Destacado = ".(int)$destacado;
+			}
+				$sql .= " LIMIT 0, ".$cantidad;
+				$productos = $conexion->query( $sql );
+			    	return $productos->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Producto", array("id", "n", "p", "m", "c", "d", "s", "i"));
+
 		}
 	}
 ?>

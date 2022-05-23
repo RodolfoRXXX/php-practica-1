@@ -1,5 +1,5 @@
 <?php
-	include("conexion.php");
+	//include("conexion.php");
 	function CargarPagina($pagina){
 		
 		$modulo = "./" . $pagina . ".php";

@@ -8,6 +8,8 @@
 	$registro = $query->fetch(PDO::FETCH_ASSOC);
 	$producto = new Producto($registro["idProducto"], $registro["Nombre"], $registro["Precio"], $registro["Marca"], $registro["Categoria"], $registro['Presentacion'], $registro["Stock"], $registro['Imagen']);
 
+	Producto::obtenerProductos();
+
 ?>
 <div class="single_top">
 		<?php
