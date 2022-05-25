@@ -14,7 +14,12 @@ class Conexion extends PDO{
         $this->password = $datos['password'];
         $this->nameDb   = $datos['nameDb'];
         $ConnectionString = $this->engineDb.':host='.$this->server.';dbname='.$this->nameDb;
+            
+        try {
             parent::__construct($ConnectionString, $this->user, $this->password);
+        } catch (PDOException $e){
+            echo $e->getMessage();
+        }
 
     }
 }

@@ -13,8 +13,5 @@ $(function() {
 			$(this).next().stop(true,true).slideUp('normal');
 		}
 	});
-	$('a.get-cart-in').click(function(e){
-		e.preventDefault();
-		alert("Esta funcionalidad estará disponible en el Curso de PHP Orientado a objetos");
-	})
+
 });

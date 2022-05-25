@@ -45,8 +45,9 @@
 					<?php } ?>
 							&nbsp;|&nbsp;
 							<li><a href="?page=contacto">CONTACTO</a></li>
+							&nbsp;|&nbsp;
+							<li><a href="?page=carrito">CARRITO</a></li>
 						</ul>
-						<!--div class="cart"><a href="#"><span></span>CART</a></div-->
 						
 						<div class="clearfix"></div>
 
