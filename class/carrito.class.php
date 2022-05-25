@@ -2,7 +2,7 @@
 
     class Carrito{
 
-        public $items;
+        private $items;
 
         public function __construct(){
             $this->items = array();
@@ -10,15 +10,15 @@
 
         //------- Métodos -------
 
-        function agregar($agregarId){
-
-            /*if(isset($this->items[$agregarId])){
-                $this->items[$agregarId]++;
+        function agregar($producto){
+            
+            if(isset($this->items[$producto->idProducto])){
+                $this->items[$producto->idProducto]->Cantidad++;
             } else{
-                $this->items[$agregarId] = 1;
+                $this->items[$producto->idProducto] = $producto;
             }
+            var_dump($this->items);
 
-            var_dump($this->items);*/
         }
 
         function quitar($quitarId){

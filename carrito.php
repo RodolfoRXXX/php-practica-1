@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+session_status() === PHP_SESSION_ACTIVE ?: session_start();
 include_once "class/producto.class.php";
 include_once "class/conexion.class.php";
 include_once "class/carrito.class.php";
@@ -12,7 +12,8 @@ include_once "class/carrito.class.php";
     }
 
     if(isset($_GET['agregarId'])){
-        $carrito->agregar($_GET['agregarId']);
+        $x = new Producto();
+        $carrito->agregar($x->productoPorId($_GET['agregarId']));
     }
 
     if(isset($_GET['quitarId'])){

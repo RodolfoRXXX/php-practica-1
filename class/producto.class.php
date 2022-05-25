@@ -105,7 +105,7 @@
 		}
 
 		//Método para buscar un producto por ID
-		function buscarPorId($id){
+		function productoPorId($id){
 			$parametros = array(
 				'engineDb'=>'mysql',
 				'server'  =>'localhost',
