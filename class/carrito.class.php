@@ -10,15 +10,15 @@
 
         //------- Métodos -------
 
-        function agregar($agregarId){
-
-            /*if(isset($this->items[$agregarId])){
-                $this->items[$agregarId]++;
+        function agregar($producto){
+            var_dump($this->items);
+            if($this->items[$producto->idProducto]){
+                //$this->items[$producto->idProducto]->Stock++;
             } else{
-                $this->items[$agregarId] = 1;
+                $this->items[$producto->idProducto] = $producto;
             }
 
-            var_dump($this->items);*/
+            var_dump($this->items);
         }
 
         function quitar($quitarId){
