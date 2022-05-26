@@ -1,6 +1,7 @@
 <?php
 
-session_status() === PHP_SESSION_ACTIVE ?: session_start();
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+
 include_once "class/producto.class.php";
 include_once "class/conexion.class.php";
 include_once "class/carrito.class.php";
@@ -12,8 +13,9 @@ include_once "class/carrito.class.php";
     }
 
     if(isset($_GET['agregarId'])){
-        $x = new Producto();
-        $carrito->agregar($x->productoPorId($_GET['agregarId']));
+        $x = Producto::buscarPorId($_GET['agregarId']);
+        $producto = new Producto($x->idProducto, $x->Nombre, $x->Precio, $x->Marca, $x->Categoria, $x->Presentacion, $x->Stock, $x->Imagen);
+        $carrito->agregar($producto);
     }
 
     if(isset($_GET['quitarId'])){
