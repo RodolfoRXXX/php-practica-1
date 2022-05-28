@@ -1,5 +1,4 @@
 <?php
-	require 'class/conexion.class.php';
 
 	class Producto {
 
@@ -25,15 +24,7 @@
 		}
 
 		//Método estático para obtener listado de productos
-		static function obtenerProductos( $cantidad = 6, $destacado = -1, $idProducto = 0 ){
-			$parametros = array(
-									'engineDb'=>'mysql',
-									'server'  =>'localhost',
-									'nameDb'  =>'comercioit',
-									'user'    =>'root',
-									'password'=>''
-								);
-			$conexion = new Conexion( $parametros );
+		static function obtenerProductos( $pdo, $cantidad = 6, $destacado = -1, $idProducto = 0 ){
 
 			$sql = 'SELECT P.idProducto, P.Nombre, P.Precio, M.Nombre AS Marca, C.Nombre AS Categoria, P.Presentacion, P.Stock, P.Imagen FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca INNER JOIN categorias AS C ON C.idCategoria = P.Categoria';
 			if($destacado != -1){
@@ -43,8 +34,10 @@
 				$sql .= " WHERE P.IdProducto = ".(int)$idProducto;
 			}
 				$sql .= " LIMIT 0, ".$cantidad;
-				$productos = $conexion->query( $sql );
-			    	return $productos->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Producto", array("id", "n", "p", "m", "c", "d", "s", "i"));
+				$stmt = $pdo->prepare( $sql );
+				$stmt->execute();
+			    	$productos = $stmt->fetchAll(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE, "Producto", array("id", "n", "p", "m", "c", "d", "s", "i"));
+					return $productos;
 
 		}
 
@@ -105,19 +98,11 @@
 		}
 
 		//Método para buscar un producto por ID
-		static function buscarPorId($id){
-			$parametros = array(
-				'engineDb'=>'mysql',
-				'server'  =>'localhost',
-				'nameDb'  =>'comercioit',
-				'user'    =>'root',
-				'password'=>''
-			);
-			$conexion = new Conexion( $parametros );
+		static function buscarPorId($id, $pdo){
 
 			$sql = "SELECT P.idProducto, P.Nombre, P.Precio, M.Nombre AS Marca, C.Nombre AS Categoria, P.Presentacion, P.Stock, P.Imagen FROM productos AS P INNER JOIN marcas AS M ON M.idMarca = P.Marca INNER JOIN categorias AS C ON C.idCategoria = P.Categoria WHERE P.idProducto = :id";
 
-			$stmt = $conexion->prepare($sql);
+			$stmt = $pdo->prepare($sql);
 
 			$stmt->execute(array(':id'=>$id));
 			return $stmt->fetch(PDO::FETCH_OBJ);
