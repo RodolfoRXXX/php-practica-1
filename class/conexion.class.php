@@ -1,11 +1,13 @@
 <?php
 
-class Conexion extends PDO{
+class Conexion{
     private $engineDb = null;
     private $server   = null;
     private $user     = null;
     private $password = null;
     private $nameDb   = null;
+
+    public $pdo;
 
     public function __construct(array $datos){
         $this->engineDb = $datos['engineDb'];
@@ -16,7 +18,7 @@ class Conexion extends PDO{
         $ConnectionString = $this->engineDb.':host='.$this->server.';dbname='.$this->nameDb;
             
         try {
-            parent::__construct($ConnectionString, $this->user, $this->password);
+            $this->pdo = new PDO($ConnectionString, $this->user, $this->password);
         } catch (PDOException $e){
             echo $e->getMessage();
         }
