@@ -15,16 +15,14 @@
     );
     $conexion = new Conexion( $parametros );
 
-	$producto = new Producto();
+	$x = Producto::buscarPorId($_GET['id'], $conexion->pdo);
 
-	$articulos = $producto->obtenerProductos( $conexion->pdo, 1, -1, $_GET['id'] );
+	$producto = new Producto($x->idProducto, $x->Nombre, $x->Precio, $x->Marca, $x->Categoria, $x->Presentacion, $x->Stock, $x->Imagen);
 
 ?>
 <div class="single_top">
 		<?php
-			foreach ($articulos as $articulo) {
-				$articulo->vistaProducto(true);
-			}
+				$producto->vistaProducto();
 		?>
 </div>
 </section>
