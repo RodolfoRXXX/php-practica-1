@@ -2,14 +2,14 @@
 
 	class Producto {
 
-		public $idProducto   = null;
-		public $Nombre 	  	 = null;
-		public $Precio 	  	 = null;
-		public $Marca 		 = null;
-		public $Categoria    = null;
-		public $Presentacion = null;
-		public $Stock 		 = null;
-		public $Imagen 	  	 = null;
+		private $idProducto   = null;
+		private $Nombre 	  	 = null;
+		private $Precio 	  	 = null;
+		private $Marca 		 = null;
+		private $Categoria    = null;
+		private $Presentacion = null;
+		private $Stock 		 = null;
+		private $Imagen 	  	 = null;
 
 
 		function __construct($id = null, $nombre = null, $precio = null, $marca = null, $cat = null, $pres = null, $stock = null, $imagen = null){

@@ -1,20 +1,12 @@
 <?php
 
-    require_once './admin/config.php';
-    require_once "class/conexion.class.php";
+    require_once "class/conexion1.class.php";
     require_once "class/producto.class.php";
     require_once "class/carrito.class.php";
 
     if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 
-    $parametros = array(
-        'engineDb'=>MOTOR,
-        'server'  =>SERVER,
-        'nameDb'  =>DB,
-        'user'    =>USER,
-        'password'=>PASS
-    );
-    $conexion = new Conexion( $parametros );
+    $conexion = Conexion::getInstance();
 
     if(isset($_SESSION['carrito'])){
         $carrito = unserialize($_SESSION['carrito']);
@@ -23,13 +15,13 @@
     }
 
     if(isset($_GET['agregarId'])){
-        $x = Producto::buscarPorId($_GET['agregarId'], $conexion->pdo);
+        $x = Producto::buscarPorId($_GET['agregarId'], $conexion);
         $producto = new Producto($x->idProducto, $x->Nombre, $x->Precio, $x->Marca, $x->Categoria, $x->Presentacion, $x->Stock, $x->Imagen);
         $carrito->agregar($producto);
     }
     
     if(isset($_GET['quitarId'])){
-        $x = Producto::buscarPorId($_GET['quitarId'], $conexion->pdo);
+        $x = Producto::buscarPorId($_GET['quitarId'], $conexion);
         $producto = new Producto($x->idProducto, $x->Nombre, $x->Precio, $x->Marca, $x->Categoria, $x->Presentacion, $x->Stock, $x->Imagen);
         $carrito->quitar($producto);
     }
@@ -50,7 +42,7 @@
             </thead>
             <tbody>
             <?php
-                $carrito->mostrarItems($carrito, $conexion->pdo);
+                $carrito->mostrarItems($carrito, $conexion);
             ?>
             </tbody>
     </table>
