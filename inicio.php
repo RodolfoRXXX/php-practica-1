@@ -7,11 +7,9 @@
 
 	$conexion = Conexion::getInstance();
 
-	$productos = new Producto();
+	$productosDestacados = Producto::obtenerProductos($conexion, 6, 1);
 
-	$productosDestacados = $productos->obtenerProductos($conexion, 6, 1);
-
-	$ultimosProductos = $productos->obtenerProductos($conexion, 3, 0);
+	$ultimosProductos = Producto::obtenerProductos($conexion, 3, 0);
 	
 ?>
 	<!-- PRODUCTOS DESTACADOS -->
